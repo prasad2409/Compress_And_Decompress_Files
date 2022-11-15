@@ -45,6 +45,7 @@ public class View extends JFrame implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e){
+        int function = -1;
         if(e.getSource() == compressButton){
             JFileChooser fileChooser = new JFileChooser();
             int responce  = fileChooser.showSaveDialog(null);
@@ -54,6 +55,7 @@ public class View extends JFrame implements ActionListener{
                 System.out.println(file);
                 try{
                     Compress.method(file);
+                    function = 1;
                 }
                 catch(Exception excp){
                     JOptionPane.showMessageDialog(null, excp.toString());
@@ -68,11 +70,17 @@ public class View extends JFrame implements ActionListener{
                 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
                 try{
                     Decompress.method(file);
+                    function = 0;
                 }
                 catch(Exception excp){
                     JOptionPane.showMessageDialog(null, excp.toString());
                 }
             }
+        }
+        switch (function) {
+            case 1 -> JOptionPane.showMessageDialog(this, "Compression is Completed", "Conformation", JOptionPane.PLAIN_MESSAGE);
+            case 0 -> JOptionPane.showMessageDialog(this, "Decompression is Completed", "Conformation", JOptionPane.PLAIN_MESSAGE);
+            default -> JOptionPane.showMessageDialog(this, "No File Selected", "Conformation", JOptionPane.PLAIN_MESSAGE);
         }
     }
     public static void main(String [] args){
